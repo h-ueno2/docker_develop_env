@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+    redmine:
+        container_name: redmine
+        image: redmine:4.1.1
+        restart: always
+        ports:
+            - 80:3000
+        volumes:
+            - ./data/redmine/files:/usr/src/redmine/files
+            - ./data/redmine/log:/usr/src/redmine/log
+            - ./data/redmine/plugins:/usr/src/redmine/plugins
+            - ./data/redmine/public/themes:/usr/src/redmine/public/themes
+        environment:
+            REDMINE_DB_POSTGRES: redmine-db
+            REDMINE_DB_PASSWORD: redmine
+            REDMINE_DB_USERNAME: redmine
+            REDMINE_DB_PASSWORD: redmine
+            TZ: Asia/Tokyo
+
+    redmine-db:
+        image: postgres:12.3
+        container_name: redmine-db
+        restart: always
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./data/postgres/db-data:/var/lib/postgresql/data
+            - ./data/postgres/initdb:/docker-entrypoint-initdb.d
+        environment:
+            POSTGRES_ROOT_PASSWORD: redmine
+            POSTGRES_USER: redmine
+            POSTGRES_PASSWORD: redmine
+            POSTGRES_DATABASE: redmine
+            TZ: Asia/Tokyo
