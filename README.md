@@ -6,8 +6,16 @@
 
 # コマンド
 
-* コンテナを全て起動
+* コンテナをビルド
+```shell
+docker-compose build
+```
+
+* コンテナを起動
 ```shell
 docker-compose up -d
 ```
-
+* コンテナを全て停止
+```shell
+docker-compose stop
+```
